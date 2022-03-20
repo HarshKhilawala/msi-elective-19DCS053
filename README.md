@@ -1,6 +1,6 @@
 # ProjectMapping
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 13.2.5.
+This project is part of a University Elective Credit Course at Charotar University of Science and Technology (CHARUSAT) in collaboration with Motorola Solutions.
 
 ## Development server
 

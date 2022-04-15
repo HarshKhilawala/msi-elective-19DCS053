@@ -3,13 +3,12 @@ import { ReactiveFormsModule, FormGroup, FormBuilder, Validators, FormControl, F
 import { AuthServiceService } from '../auth-service.service';
 import { WebRequestService } from '../web-request.service';
 
-
 @Component({
-  selector: 'app-login',
-  templateUrl: './login.component.html',
-  styleUrls: ['./login.component.css']
+  selector: 'app-register',
+  templateUrl: './register.component.html',
+  styleUrls: ['./register.component.css']
 })
-export class LoginComponent implements OnInit {
+export class RegisterComponent implements OnInit {
 
   hide: boolean = false;
 
@@ -21,7 +20,7 @@ export class LoginComponent implements OnInit {
 
   }
 
-  loginForm: FormGroup = this.fb.group(
+  registerForm: FormGroup = this.fb.group(
     {
       email: new FormControl('',[Validators.required, Validators.email, Validators.pattern("^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$")]),
       password: new FormControl('',[Validators.required, Validators.minLength(8)]),
@@ -30,14 +29,14 @@ export class LoginComponent implements OnInit {
 
 
 
-  onLogin(){
-    if(!this.loginForm.valid) {
+  onRegister(){
+    if(!this.registerForm.valid) {
       return;
     }
-    let email = this.loginForm.value.email;
-    let password = this.loginForm.value.password;
+    let email = this.registerForm.value.email;
+    let password = this.registerForm.value.password;
     console.log(email, password);
-    this.authService.loginUser({email,password}).subscribe((response:any)=>{
+    this.authService.registerUser({email,password}).subscribe((response:any)=>{
       console.log(response);
     });
   }

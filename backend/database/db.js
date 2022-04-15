@@ -5,6 +5,12 @@ const app = express();
 
 app.use(bodyParser.urlencoded({extended:true}));
 
+app.use((req,res, next)=>{
+  res.setHeader('Access-Control-Allow-Origin','*');
+  res.setHeader('Access-Control-Allow-Methods','GET, POST, PUT, DELETE');
+  res.setHeader('Access-Control-Allow-Headers','Content-type, Authorization');
+  next();
+});
 
 const client = new Client({
   host:"localhost",
@@ -13,6 +19,7 @@ const client = new Client({
   password: "root",
   database: "users"
 })
+
 
 client.connect();
 
@@ -55,8 +62,8 @@ app.post("/login", (req, res)=>{
 app.post('/register', (req, res)=>{
   let {username, password} = req.body;
 
-  let query1 = `INSERT INTO projects.usermanagement (username, password) VALUES($1, $2)`;
-  client.query(query1, [username, password], (err, result)=>{
+  // let query1 = `INSERT INTO projects.usermanagement (username, password) VALUES($1, $2)`;
+  client.query(`INSERT INTO projects.usermanagement (username, password) VALUES (${username}, ${password})`, [username, password], (err, result)=>{
     if(err){
       res.status(400).json({"Reason":"DB Error"});
     } else {

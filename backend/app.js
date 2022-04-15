@@ -15,8 +15,19 @@ app.use((req,res, next)=>{
 
 app.get('/', (req,res)=> {
   res.send("Root route");
+
 });
 
 app.listen(ports, function(){
   console.log(`Server up and running on port ${ports}!`);
 });
+
+
+
+
+
+// creating a route with 2 paramaters (username, password) in request
+// connect to postgressDB
+// Comparing username and password with DB
+// If Success, return success (redirect to project mapping dashboard/table)
+// Else (failure), display login error message

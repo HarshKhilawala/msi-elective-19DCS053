@@ -5,6 +5,7 @@ const app = express();
 const bcrypt = require('bcrypt');
 const ports = process.env.PORT || 3000;
 
+app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({extended:true}));
 
 app.use((req,res, next)=>{
@@ -15,22 +16,23 @@ app.use((req,res, next)=>{
 });
 
 app.get("/", (req,res)=>{
-  let query1 = 'Select * from projects.usermanagement';
-  client.query(query1, (err,result)=>{
+
+  client.query('SELECT * FROM projects.usermanagement', (err,result)=>{
     if(err){
       res.status(400).json({"Reason":"Error in DB"});
     }
     else {
       res.status(200).json(result.rows);
     }
-    client.end;
+
   });
 });
 
 app.post("/login", (req, res)=>{
-  let {username, password} = req.body;
+  let {email, password} = req.body;
+  console.log(req.body);
   let query1 = `SELECT * from projects.usermanagement where username = $1`;
-  client.query(query1,[username], (req,result)=>{
+  client.query(query1,[email], (err,result)=>{
     if(err){
       res.status(400).json({"Reason":"Error in DB"});
     } else if(result.rows.length===0){
@@ -46,15 +48,14 @@ app.post("/login", (req, res)=>{
       }
     }
 
-    client.end;
   });
 });
 
 app.post('/register', (req, res)=>{
-  let {username, password} = req.body;
-
+  let {email, password} = req.body;
+  console.log(req.body);
   // let query1 = `INSERT INTO projects.usermanagement (username, password) VALUES($1, $2)`;
-  client.query(`INSERT INTO projects.usermanagement (username, password) VALUES (${username}, ${password})`, [username, password], (err, result)=>{
+  client.query(`INSERT INTO projects.usermanagement(username, password) VALUES($1, $2)`,[email, password], (err, result)=>{
     if(err){
       res.status(400).json({"Reason":"DB Error"});
     } else {
@@ -63,13 +64,16 @@ app.post('/register', (req, res)=>{
 
   });
 
-  client.end;
+});
+
+client.connect().then(()=>{
+  console.log("Database Connected!");
+  app.listen(ports,()=>{
+    console.log("Server up and running on port 3000!");
+  });
 });
 
 
-app.listen(ports,()=>{
-  console.log("Server up and running on port 3000!");
-});
 
 
 // creating a route with 2 paramaters (username, password) in request

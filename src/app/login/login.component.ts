@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ReactiveFormsModule, FormGroup, FormBuilder, Validators, FormControl, Form } from '@angular/forms';
 import { AuthServiceService } from '../auth-service.service';
 import { WebRequestService } from '../web-request.service';
+import { AlertComponent } from '../alert/alert.component';
 
 
 @Component({
@@ -13,7 +14,7 @@ export class LoginComponent implements OnInit {
 
   hide: boolean = false;
 
-  constructor(private authService:AuthServiceService, private fb:FormBuilder) {
+  constructor(private alertComponent: AlertComponent, private authService:AuthServiceService, private fb:FormBuilder) {
 
   }
 
@@ -39,7 +40,16 @@ export class LoginComponent implements OnInit {
     console.log(email, password);
     this.authService.loginUser({email,password}).subscribe((response:any)=>{
       console.log(response);
+      if(response.Reason=="Login Successful"){
+        this.alertComponent.toggleClr(true);
+        this.alertComponent.toggleHide(false);
+      } else {
+        this.alertComponent.toggleClr(false);
+        this.alertComponent.toggleHide(false);
+      }
     });
   }
+
+
 
 }

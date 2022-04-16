@@ -1,0 +1,5 @@
+<div class="alert" [ngClass]="[btnClr ? 'btn-success':'btn-danger']" [hidden]="hide">
+  <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
+  <p *ngIf="!btnClr">Incorrect Email or Password</p>
+  <p *ngIf="btnClr">Login Successful</p>
+</div>

@@ -31,21 +31,30 @@ app.get("/", (req,res)=>{
 app.post("/login", (req, res)=>{
   let {email, password} = req.body;
   console.log(req.body);
-  let query1 = `SELECT * from projects.usermanagement where username = $1`;
-  client.query(query1,[email], (err,result)=>{
+
+  client.query(`SELECT * from projects.usermanagement where username = $1`,[email], (err,result)=>{
     if(err){
       res.status(400).json({"Reason":"Error in DB"});
     } else if(result.rows.length===0){
       res.send("Users does not exist.");
     } else {
       let userData = result.rows[0];
-      if (userData.password === password){
-        console.log("Login Successful!");
-        res.status(200).json({"Reason": "Login Successful"});
-      } else {
-        console.log("Login Failed! Username or password does not match.")
-        res.send("Login Failed!");
-      }
+      bcrypt.compare(password, userData.password).then((result)=>{
+        if(result){
+          console.log("Login Successful!");
+          res.status(200).json({"Reason":"Login Successful"});
+        } else {
+          console.log("Login Failed! Incorrect Username or password");
+          res.status(401).json({"Reason":"Incorrect username or password"});
+        }
+      });
+      // if (userData.password === password){
+      //   console.log("Login Successful!");
+      //   res.status(200).json({"Reason": "Login Successful"});
+      // } else {
+      //   console.log("Login Failed! Username or password does not match.")
+      //   res.send("Login Failed!");
+      // }
     }
 
   });
@@ -54,14 +63,15 @@ app.post("/login", (req, res)=>{
 app.post('/register', (req, res)=>{
   let {email, password} = req.body;
   console.log(req.body);
-  // let query1 = `INSERT INTO projects.usermanagement (username, password) VALUES($1, $2)`;
-  client.query(`INSERT INTO projects.usermanagement(username, password) VALUES($1, $2)`,[email, password], (err, result)=>{
-    if(err){
-      res.status(400).json({"Reason":"DB Error"});
-    } else {
-      res.status(200).json({"Reason":"User Inserted Successfully."});
-    }
 
+  bcrypt.hash(password,10).then((hashedPassword)=>{
+    client.query(`INSERT INTO projects.usermanagement(username, password) VALUES($1, $2)`,[email, hashedPassword], (err, result)=>{
+      if(err) {
+        res.status(400).json({"Reason":"DB Error"});
+      } else {
+        res.status(200).json({"Reason":"User Inserted Successfully."});
+      }
+    });
   });
 
 });

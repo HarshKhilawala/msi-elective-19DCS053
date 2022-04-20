@@ -14,7 +14,7 @@ export class LoginComponent implements OnInit {
 
   hide: boolean = false;
 
-  constructor(private alertComponent: AlertComponent, private authService:AuthServiceService, private fb:FormBuilder) {
+  constructor(private authService:AuthServiceService, private fb:FormBuilder) {
 
   }
 
@@ -40,13 +40,13 @@ export class LoginComponent implements OnInit {
     console.log(email, password);
     this.authService.loginUser({email,password}).subscribe((response:any)=>{
       console.log(response);
-      if(response.Reason=="Login Successful"){
-        this.alertComponent.toggleClr(true);
-        this.alertComponent.toggleHide(false);
-      } else {
-        this.alertComponent.toggleClr(false);
-        this.alertComponent.toggleHide(false);
-      }
+      // if(response.Reason=="Login Successful"){
+      //   this.alertComponent.toggleClr(true);
+      //   this.alertComponent.toggleHide(false);
+      // } else {
+      //   this.alertComponent.toggleClr(false);
+      //   this.alertComponent.toggleHide(false);
+      // }
     });
   }
 

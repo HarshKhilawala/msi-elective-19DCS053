@@ -45,8 +45,8 @@ export class LoginComponent implements OnInit {
       console.log(response.message);
       // this.router.navigate(['/dashboard']);
       if(response.status===true){
-        this.authService.toggleClr(true);
-        this.authService.toggleHide(true);
+        this.authService.toggleClr(false);
+        this.authService.toggleHide(false);
       }
 
 

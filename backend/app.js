@@ -1,8 +1,10 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const client = require('./database/db.js');
-const app = express();
 const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken');
+
+const app = express();
 const ports = process.env.PORT || 3000;
 
 app.use(bodyParser.json())
@@ -42,6 +44,8 @@ app.post("/login", (req, res)=>{
       bcrypt.compare(password, userData.password).then((result)=>{
         if(result){
           console.log("Login Successful!");
+          console.log(result);
+          console.log(userData);
           res.status(200).json({'status': true , 'message' : 'valid user'});
         } else {
           console.log("Login Failed! Incorrect Username or password");

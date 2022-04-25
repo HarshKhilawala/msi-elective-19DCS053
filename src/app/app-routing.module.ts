@@ -12,13 +12,9 @@ const routes: Routes = [
     path: '', component: AppComponent,
     children: [
       {
-        path: '',
+        path: 'login',
         component: LoginComponent
       },
-      {
-        path: 'register',
-        component: RegisterComponent
-      }
     ]
   },
   {
@@ -29,6 +25,10 @@ const routes: Routes = [
   },
   {
     path: 'nav', component: NavComponent
+  },
+  {
+    path: 'register',
+    component: RegisterComponent
   }
 ];
 

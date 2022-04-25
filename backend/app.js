@@ -42,10 +42,10 @@ app.post("/login", (req, res)=>{
       bcrypt.compare(password, userData.password).then((result)=>{
         if(result){
           console.log("Login Successful!");
-          res.status(200).json({"Reason":"Login Successful"});
+          res.status(200).json({'status': true , 'message' : 'valid user'});
         } else {
           console.log("Login Failed! Incorrect Username or password");
-          res.status(401).json({"Reason":"Incorrect username or password"});
+          res.status(401).json({'status': false, 'message': 'invalid user'});
         }
       });
       // if (userData.password === password){

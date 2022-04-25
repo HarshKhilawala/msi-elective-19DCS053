@@ -1,30 +1,48 @@
-<mat-card>
-  <mat-card-content>
+<div class="content-body">
+  <mat-card>
+    <mat-card-content>
       <div class="header">
-          <h2>Register</h2>
+        <h2>Register</h2>
       </div>
-      <form (ngSubmit)="onRegister()" name="registerForm" [formGroup]="registerForm">
-          <div class="email-input">
-              <mat-form-field class="full-width" appearance="outline">
-                  <mat-label>Email</mat-label>
-                  <input formControlName="email" matInput required placeholder="Enter email address">
-                  <mat-error *ngIf="!registerForm.controls['email'].valid">
-                      Required Email Address
-                  </mat-error>
-              </mat-form-field>
-          </div>
-          <div>
-              <span class="aLink">Forgot Password</span>
-              <mat-form-field class="full-width" appearance="outline">
-                  <mat-label>Password</mat-label>
-                  <input formControlName="password" matInput [type]=" hide ? 'password' : 'text'" required>
-                  <button mat-icon-button matSuffix (click)="hide = !hide">
-                      <mat-icon>{{hide ? 'visibility_off': 'visibility'}}</mat-icon>
-                  </button>
-                  <mat-error *ngIf="!registerForm.controls['password'].valid"> Required Password </mat-error>
-              </mat-form-field>
-          </div>
-          <button mat-flat-button color="primary">Register</button>
+      <form
+        (ngSubmit)="onRegister()"
+        name="registerForm"
+        [formGroup]="registerForm"
+      >
+        <div class="email-input">
+          <mat-form-field class="full-width" appearance="outline">
+            <mat-label>Email</mat-label>
+            <input
+              formControlName="email"
+              matInput
+              required
+              placeholder="Enter email address"
+            />
+            <mat-error *ngIf="!registerForm.controls['email'].valid">
+              Required Email Address
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <div>
+          <span class="aLink">Forgot Password</span>
+          <mat-form-field class="full-width" appearance="outline">
+            <mat-label>Password</mat-label>
+            <input
+              formControlName="password"
+              matInput
+              [type]="hide ? 'password' : 'text'"
+              required
+            />
+            <button mat-icon-button matSuffix (click)="hide = !hide">
+              <mat-icon>{{ hide ? "visibility_off" : "visibility" }}</mat-icon>
+            </button>
+            <mat-error *ngIf="!registerForm.controls['password'].valid">
+              Required Password
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <button mat-flat-button color="primary">Register</button>
       </form>
-  </mat-card-content>
-</mat-card>
+    </mat-card-content>
+  </mat-card>
+</div>

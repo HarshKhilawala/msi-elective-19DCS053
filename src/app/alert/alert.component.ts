@@ -9,7 +9,7 @@ export class AlertComponent implements OnInit {
 
   constructor() { }
 
-  hide: boolean = true;
+  hide: boolean = false;
   btnClr: boolean = false;
 
   ngOnInit(): void {

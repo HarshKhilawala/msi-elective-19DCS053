@@ -27,3 +27,8 @@ mat-card {
   text-decoration: none;
 }
 
+.content-body {
+  min-height: 100%;
+  padding: 60px 1rem;
+  background-color: aqua;
+}

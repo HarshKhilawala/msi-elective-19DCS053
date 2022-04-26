@@ -2,24 +2,16 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { WebRequestService } from './web-request.service';
-import { AlertComponent } from './alert/alert.component';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthServiceService {
 
-  constructor(private webRequestService:WebRequestService, private alertComponent:AlertComponent) {
+  constructor(private webRequestService:WebRequestService) {
 
   }
 
-  toggleClr(clr:boolean){
-    this.alertComponent.toggleClr(clr);
-  }
-
-  toggleHide(hide:boolean){
-    this.alertComponent.toggleHide(hide);
-  }
 
   loginUser(credentials:Object){
     return this.webRequestService.post('login',credentials);
@@ -27,6 +19,10 @@ export class AuthServiceService {
 
   registerUser(credentials:Object){
     return this.webRequestService.post('register',credentials);
+  }
+
+  loggedIn(){
+    return !!localStorage.getItem('token');
   }
 
 }

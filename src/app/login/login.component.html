@@ -39,7 +39,12 @@
         </div>
         <button mat-flat-button color="primary">Login</button>
         <br /><br />
-        <app-alert></app-alert>
+
+        <div *ngIf="!btnColor" class="alert btn-danger" [hidden]="hideAlert">
+          <span class="closebtn" (click)="toggleAlert()">&times;</span>
+          <p *ngIf="!btnColor">Incorrect Email or Password</p>
+        </div>
+
       </form>
     </mat-card-content>
   </mat-card>

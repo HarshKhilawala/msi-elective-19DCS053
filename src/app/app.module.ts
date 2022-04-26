@@ -14,7 +14,6 @@ import { MatListModule } from '@angular/material/list';
 import { LoginComponent } from './login/login.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { RegisterComponent } from './register/register.component';
-import { AlertComponent } from './alert/alert.component';
 import { MatTableModule } from '@angular/material/table';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSortModule } from '@angular/material/sort';
@@ -25,6 +24,10 @@ import { LayoutModule } from '@angular/cdk/layout';
 import { NavComponent } from './nav/nav.component';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatSidenavModule } from '@angular/material/sidenav';
+import {MatSelectModule} from '@angular/material/select';
+import { AuthGuard } from './auth.guard';
+import { AuthServiceService } from './auth-service.service';
+
 
 
 @NgModule({
@@ -33,7 +36,6 @@ import { MatSidenavModule } from '@angular/material/sidenav';
     LoginComponent,
     DashboardComponent,
     RegisterComponent,
-    AlertComponent,
     TableComponent,
     NavComponent,
   ],
@@ -56,8 +58,9 @@ import { MatSidenavModule } from '@angular/material/sidenav';
     LayoutModule,
     MatToolbarModule,
     MatSidenavModule,
+    MatSelectModule,
   ],
-  providers: [AlertComponent],
+  providers: [AuthServiceService, AuthGuard],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

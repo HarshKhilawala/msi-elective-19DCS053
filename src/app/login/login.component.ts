@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { ReactiveFormsModule, FormGroup, FormBuilder, Validators, FormControl, Form } from '@angular/forms';
 import { AuthServiceService } from '../auth-service.service';
 import { WebRequestService } from '../web-request.service';
-import { AlertComponent } from '../alert/alert.component';
 import { Router } from '@angular/router';
 
 @Component({
@@ -13,6 +12,8 @@ import { Router } from '@angular/router';
 export class LoginComponent implements OnInit {
 
   hide: boolean = false;
+  btnColor: boolean = false;
+  hideAlert: boolean = true;
 
   constructor(private router: Router, private authService:AuthServiceService, private fb:FormBuilder) {
 
@@ -30,8 +31,6 @@ export class LoginComponent implements OnInit {
     }
   )
 
-
-
   onLogin(){
     if(!this.loginForm.valid) {
       return;
@@ -43,26 +42,20 @@ export class LoginComponent implements OnInit {
       (response:any)=>{
       console.log(response.status);
       console.log(response.message);
-      // this.router.navigate(['/dashboard']);
-      if(response.status===true){
-        this.authService.toggleClr(false);
-        this.authService.toggleHide(false);
+      localStorage.setItem('token', response.token);
+      if(response['status']){
+        this.router.navigate(['/nav']);
       }
 
-
-
-      // if(response.Reason=="Login Successful"){
-      //   this.alertComponent.toggleClr(true);
-      //   this.alertComponent.toggleHide(false);
-      // } else {
-      //   this.alertComponent.toggleClr(false);
-      //   this.alertComponent.toggleHide(false);
-      // }
     },error=>{
       console.error(error.error.message);
-
+      this.hideAlert = false;
     }
     );
+  }
+
+  toggleAlert(){
+    this.hideAlert = !this.hideAlert;
   }
 
     // Subscribe - subtype - green response (valid)

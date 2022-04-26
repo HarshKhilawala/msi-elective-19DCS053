@@ -34,7 +34,7 @@ app.post("/login", (req, res)=>{
   let {email, password} = req.body;
   console.log(req.body);
 
-  client.query(`SELECT * from projects.usermanagement where username = $1`,[email], (err,result)=>{
+  client.query(`SELECT * from projects.usermanagement where email = $1`,[email], (err,result)=>{
     if(err){
       res.status(400).json({"Reason":"Error in DB"});
     } else if(result.rows.length===0){
@@ -44,9 +44,9 @@ app.post("/login", (req, res)=>{
       bcrypt.compare(password, userData.password).then((result)=>{
         if(result){
           console.log("Login Successful!");
-          console.log(result);
-          console.log(userData);
-          res.status(200).json({'status': true , 'message' : 'valid user'});
+          let payLoad = {subject: userData.email};
+          let token = jwt.sign(payLoad, 'secret');
+          res.status(200).json({'status': true , 'message' : 'valid user',token});
         } else {
           console.log("Login Failed! Incorrect Username or password");
           res.status(401).json({'status': false, 'message': 'invalid user'});
@@ -65,15 +65,17 @@ app.post("/login", (req, res)=>{
 });
 
 app.post('/register', (req, res)=>{
-  let {email, password} = req.body;
+  let {email, password, role} = req.body;
   console.log(req.body);
 
   bcrypt.hash(password,10).then((hashedPassword)=>{
-    client.query(`INSERT INTO projects.usermanagement(username, password) VALUES($1, $2)`,[email, hashedPassword], (err, result)=>{
+    client.query(`INSERT INTO projects.usermanagement(email, password, role) VALUES($1, $2, $3)`,[email, hashedPassword, role], (err, result)=>{
       if(err) {
         res.status(400).json({"Reason":"DB Error"});
       } else {
-        res.status(200).json({"Reason":"User Inserted Successfully."});
+        let payLoad = {subject:email,};
+        let token = jwt.sign(payLoad, 'secret');
+        res.status(200).json({"Reason":"User Inserted Successfully.",token});
       }
     });
   });

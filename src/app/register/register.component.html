@@ -2,7 +2,7 @@
   <mat-card>
     <mat-card-content>
       <div class="header">
-        <h2>Register</h2>
+        <h2>Register New User</h2>
       </div>
       <form
         (ngSubmit)="onRegister()"
@@ -24,7 +24,6 @@
           </mat-form-field>
         </div>
         <div>
-          <span class="aLink">Forgot Password</span>
           <mat-form-field class="full-width" appearance="outline">
             <mat-label>Password</mat-label>
             <input
@@ -41,7 +40,34 @@
             </mat-error>
           </mat-form-field>
         </div>
+
+
+        <div>
+          <mat-form-field class="full-width" appearance="fill">
+            <mat-label>Select role</mat-label>
+            <mat-select formControlName="userRole" required>
+              <mat-option *ngFor="let role of roles" [value]="role.value">
+                {{ role.viewValue }}
+              </mat-option>
+            </mat-select>
+            <mat-error *ngIf="!registerForm.controls['userRole'].valid">Please choose a role.</mat-error>
+          </mat-form-field>
+        </div>
+
         <button mat-flat-button color="primary">Register</button>
+        <br /><br />
+
+        <div *ngIf="!btnColor" class="alert btn-danger" [hidden]="hideAlert">
+          <span class="closebtn" (click)="toggleAlert()">&times;</span>
+          <p *ngIf="!btnColor">User already exists!</p>
+        </div>
+
+        <div *ngIf="btnColor" class="alert btn-success" [hidden]="hideAlert">
+          <span class="closebtn" (click)="toggleAlert()">&times;</span>
+          <p *ngIf="btnColor">User registered successfully!</p>
+        </div>
+
+
       </form>
     </mat-card-content>
   </mat-card>

@@ -8,7 +8,7 @@ import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
 import { MatInputModule } from '@angular/material/input';
 import { MatIconModule } from '@angular/material/icon';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { MatListModule } from '@angular/material/list';
 
 import { LoginComponent } from './login/login.component';
@@ -27,7 +27,7 @@ import { MatSidenavModule } from '@angular/material/sidenav';
 import {MatSelectModule} from '@angular/material/select';
 import { AuthGuard } from './auth.guard';
 import { AuthServiceService } from './auth-service.service';
-
+import { TokenInterceptorService } from './token-interceptor.service';
 
 
 @NgModule({
@@ -60,7 +60,11 @@ import { AuthServiceService } from './auth-service.service';
     MatSidenavModule,
     MatSelectModule,
   ],
-  providers: [AuthServiceService, AuthGuard],
+  providers: [AuthServiceService, AuthGuard, {
+    provide: HTTP_INTERCEPTORS,
+    useClass: TokenInterceptorService,
+    multi: true
+  }],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

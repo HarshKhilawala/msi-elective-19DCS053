@@ -17,6 +17,27 @@ app.use((req,res, next)=>{
   next();
 });
 
+function verifyToken(req, res, next){
+  if(!req.headers.authorization) {
+    return res.status(401).send('Unauthorized request');
+  }
+
+  console.log(req.headers);
+  let token = req.headers.authorization.split(' ')[1];
+
+  if(token === 'null'){
+    return res.status(401).send('Unauthorized request');
+  }
+
+  let payLoad = jwt.verify(token, 'secret');
+  if(!payLoad){
+    return res.status(401).send('Unauthorized request');
+  }
+
+  req.email = payLoad.subject;
+  // next();
+}
+
 app.get("/", (req,res)=>{
 
   client.query('SELECT * FROM projects.usermanagement', (err,result)=>{
@@ -28,6 +49,11 @@ app.get("/", (req,res)=>{
     }
 
   });
+});
+
+app.get("/nav", verifyToken,(req, res)=>{
+
+
 });
 
 app.post("/login", (req, res)=>{

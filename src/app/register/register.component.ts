@@ -39,6 +39,7 @@ export class RegisterComponent implements OnInit {
 
   registerForm: FormGroup = this.fb.group(
     {
+      name: new FormControl('',[Validators.required, Validators.minLength(5)]),
       email: new FormControl('',[Validators.required, Validators.email, Validators.pattern("^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$")]),
       password: new FormControl('',[Validators.required, Validators.minLength(8)]),
       userRole: new FormControl('',Validators.required),
@@ -51,12 +52,13 @@ export class RegisterComponent implements OnInit {
     if(!this.registerForm.valid) {
       return;
     }
+    let name = this.registerForm.value.name;
     let email = this.registerForm.value.email;
     let password = this.registerForm.value.password;
     let role = this.registerForm.value.userRole;
-    console.log({email, password, role});
+    console.log({name, email, password, role});
 
-    this.authService.registerUser({email, password, role}).subscribe((response:any)=>{
+    this.authService.registerUser({name, email, password, role}).subscribe((response:any)=>{
       console.log(response);
       localStorage.setItem('token', response.token);
       this.btnColor = true;

@@ -7,9 +7,44 @@
     </ng-container>
 
     <!-- Name Column -->
-    <ng-container matColumnDef="name">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header>Name</th>
-      <td mat-cell *matCellDef="let row">{{row.name}}</td>
+    <ng-container matColumnDef="project_name">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Project Name</th>
+      <td mat-cell *matCellDef="let row">{{row.project_name}}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="dept_code">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Department Code</th>
+      <td mat-cell *matCellDef="let row">{{row.dept_code}}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="users">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Users</th>
+      <td mat-cell *matCellDef="let row">{{row.users}}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="product">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Product</th>
+      <td mat-cell *matCellDef="let row">{{row.product}}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="status">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Status</th>
+      <td mat-cell *matCellDef="let row">{{row.status}}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="createdat">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Created At</th>
+      <td mat-cell *matCellDef="let row">{{row.createdat}}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="cieareaid">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>CIE AreaID</th>
+      <td mat-cell *matCellDef="let row">{{row.cieareaid}}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="financeproductid">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Finance ProductID</th>
+      <td mat-cell *matCellDef="let row">{{row.financeproductid}}</td>
     </ng-container>
 
     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
@@ -17,10 +52,20 @@
   </table>
 
   <mat-paginator #paginator
-      [length]="dataSource?.data?.length"
+      [length]="tableData?.length"
       [pageIndex]="0"
       [pageSize]="10"
       [pageSizeOptions]="[5, 10, 20]"
       aria-label="Select page">
   </mat-paginator>
 </div>
+
+<!-- id: number;
+  project_name: string;
+  cieareaid: number;
+  dept_code: string;
+  createdat: string;
+  financeproductid: number;
+  product: string;
+  status: string;
+  updatedat: string; -->

@@ -9,6 +9,20 @@
         name="registerForm"
         [formGroup]="registerForm"
       >
+      <div class="username-input">
+        <mat-form-field class="full-width" appearance="outline">
+          <mat-label>Name</mat-label>
+          <input
+            formControlName="name"
+            matInput
+            required
+            placeholder="Enter Full Name"
+          />
+          <mat-error *ngIf="!registerForm.controls['name'].valid">
+            Required Full Name
+          </mat-error>
+        </mat-form-field>
+      </div>
         <div class="email-input">
           <mat-form-field class="full-width" appearance="outline">
             <mat-label>Email</mat-label>

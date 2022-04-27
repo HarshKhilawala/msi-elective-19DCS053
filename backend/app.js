@@ -3,6 +3,7 @@ const bodyParser = require('body-parser');
 const client = require('./database/db.js');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
+const e = require('express');
 
 const app = express();
 const ports = process.env.PORT || 3000;
@@ -22,7 +23,7 @@ function verifyToken(req, res, next){
     return res.status(401).send('Unauthorized request');
   }
 
-  console.log(req.headers);
+  // console.log(req.headers);
   let token = req.headers.authorization.split(' ')[1];
 
   if(token === 'null'){
@@ -35,7 +36,7 @@ function verifyToken(req, res, next){
   }
 
   req.email = payLoad.subject;
-  // next();
+  next();
 }
 
 app.get("/", (req,res)=>{
@@ -47,14 +48,35 @@ app.get("/", (req,res)=>{
     else {
       res.status(200).json(result.rows);
     }
-
   });
 });
 
 app.get("/nav", verifyToken,(req, res)=>{
-
-
+  let email = req.email; // email after verification(verifyToken) of token
+  client.query(`SELECT * FROM projects.usermanagement where email = $1`, [email], (err, result)=>{
+    if(err){
+      res.status(400).json({"Reason":"Error in DB"});
+    } else {
+      let userData = result.rows[0];
+      let name = userData.name;
+      let role = userData.role;
+      res.status(200).json({name, email, role});
+    }
+  });
 });
+
+app.get("/table", verifyToken, (req, res)=>{
+
+  client.query('SELECT * FROM projects.projectmanagement', (err,result)=>{
+    if(err){
+      res.status(400).json({"Reason":"Error in DB"});
+    } else {
+      console.log(result.rows);
+      res.status(200).json({table: result.rows});
+    }
+  });
+
+})
 
 app.post("/login", (req, res)=>{
   let {email, password} = req.body;
@@ -78,24 +100,17 @@ app.post("/login", (req, res)=>{
           res.status(401).json({'status': false, 'message': 'invalid user'});
         }
       });
-      // if (userData.password === password){
-      //   console.log("Login Successful!");
-      //   res.status(200).json({"Reason": "Login Successful"});
-      // } else {
-      //   console.log("Login Failed! Username or password does not match.")
-      //   res.send("Login Failed!");
-      // }
     }
 
   });
 });
 
 app.post('/register', (req, res)=>{
-  let {email, password, role} = req.body;
+  let {name, email, password, role} = req.body;
   console.log(req.body);
 
   bcrypt.hash(password,10).then((hashedPassword)=>{
-    client.query(`INSERT INTO projects.usermanagement(email, password, role) VALUES($1, $2, $3)`,[email, hashedPassword, role], (err, result)=>{
+    client.query(`INSERT INTO projects.usermanagement(name, email, password, role) VALUES($1, $2, $3, $4)`,[name ,email, hashedPassword, role], (err, result)=>{
       if(err) {
         res.status(400).json({"Reason":"DB Error"});
       } else {

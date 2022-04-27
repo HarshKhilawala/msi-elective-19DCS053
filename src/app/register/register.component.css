@@ -17,9 +17,13 @@ mat-card {
   padding-left: 0px;
 }
 
-.email-input{
+.username-input{
   padding-top: 10px;
 }
+
+/* .email-input{
+  padding-top: 10px;
+} */
 
 .aLink{
   float: right;

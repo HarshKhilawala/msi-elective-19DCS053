@@ -11,6 +11,10 @@ import { AuthServiceService } from '../auth-service.service';
 })
 export class NavComponent {
 
+  fullName:string = "";
+  email:string = "";
+  role:string = "";
+
   menuItems = ['dashboard', 'register', 'table'];
 
   isHandset$: Observable<boolean> = this.breakpointObserver.observe(Breakpoints.Handset)
@@ -22,6 +26,19 @@ export class NavComponent {
     //Public authService - usecase in nav.component.html
   constructor(public authService:AuthServiceService,private breakpointObserver: BreakpointObserver) {}
 
+  ngOnInit(): void {
+    this.getUserData();
+  }
+
+  getUserData(){
+    this.authService.getUserDetails().subscribe((response:any)=>{
+      this.fullName = response.name;
+      this.email = response.email;
+      this.role = response.role;
+    },error=>{
+      console.log(error.error.message);
+    });
+  }
 
 
 

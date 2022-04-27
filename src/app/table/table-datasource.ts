@@ -6,32 +6,42 @@ import { Observable, of as observableOf, merge } from 'rxjs';
 
 // TODO: Replace this with your own data model type
 export interface TableItem {
-  name: string;
+  // name: string;
+  // id: number;
+
   id: number;
+  project_name: string;
+  cieareaid: number;
+  dept_code: string;
+  createdat: string;
+  financeproductid: number;
+  product: string;
+  status: string;
+  updatedat: string;
 }
 
 // TODO: replace this with real data from your application
 const EXAMPLE_DATA: TableItem[] = [
-  {id: 1, name: 'Hydrogen'},
-  {id: 2, name: 'Helium'},
-  {id: 3, name: 'Lithium'},
-  {id: 4, name: 'Beryllium'},
-  {id: 5, name: 'Boron'},
-  {id: 6, name: 'Carbon'},
-  {id: 7, name: 'Nitrogen'},
-  {id: 8, name: 'Oxygen'},
-  {id: 9, name: 'Fluorine'},
-  {id: 10, name: 'Neon'},
-  {id: 11, name: 'Sodium'},
-  {id: 12, name: 'Magnesium'},
-  {id: 13, name: 'Aluminum'},
-  {id: 14, name: 'Silicon'},
-  {id: 15, name: 'Phosphorus'},
-  {id: 16, name: 'Sulfur'},
-  {id: 17, name: 'Chlorine'},
-  {id: 18, name: 'Argon'},
-  {id: 19, name: 'Potassium'},
-  {id: 20, name: 'Calcium'},
+  // {id: 1, name: 'Hydrogen'},
+  // {id: 2, name: 'Helium'},
+  // {id: 3, name: 'Lithium'},
+  // {id: 4, name: 'Beryllium'},
+  // {id: 5, name: 'Boron'},
+  // {id: 6, name: 'Carbon'},
+  // {id: 7, name: 'Nitrogen'},
+  // {id: 8, name: 'Oxygen'},
+  // {id: 9, name: 'Fluorine'},
+  // {id: 10, name: 'Neon'},
+  // {id: 11, name: 'Sodium'},
+  // {id: 12, name: 'Magnesium'},
+  // {id: 13, name: 'Aluminum'},
+  // {id: 14, name: 'Silicon'},
+  // {id: 15, name: 'Phosphorus'},
+  // {id: 16, name: 'Sulfur'},
+  // {id: 17, name: 'Chlorine'},
+  // {id: 18, name: 'Argon'},
+  // {id: 19, name: 'Potassium'},
+  // {id: 20, name: 'Calcium'},
 ];
 
 /**
@@ -40,13 +50,15 @@ const EXAMPLE_DATA: TableItem[] = [
  * (including sorting, pagination, and filtering).
  */
 export class TableDataSource extends DataSource<TableItem> {
-  data: TableItem[] = EXAMPLE_DATA;
+  data: TableItem[] = [];
   paginator: MatPaginator | undefined;
   sort: MatSort | undefined;
 
-  constructor() {
+  constructor(tableData:any) {
     super();
+    this.data = tableData;
   }
+
 
   /**
    * Connect this data source to the table. The table will only update when
@@ -97,7 +109,7 @@ export class TableDataSource extends DataSource<TableItem> {
     return data.sort((a, b) => {
       const isAsc = this.sort?.direction === 'asc';
       switch (this.sort?.active) {
-        case 'name': return compare(a.name, b.name, isAsc);
+        case 'project_name': return compare(a.project_name, b.project_name, isAsc);
         case 'id': return compare(+a.id, +b.id, isAsc);
         default: return 0;
       }

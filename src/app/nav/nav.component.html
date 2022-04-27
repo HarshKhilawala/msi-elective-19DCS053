@@ -4,7 +4,12 @@
       [mode]="(isHandset$ | async) ? 'over' : 'side'"
       [opened]="(isHandset$ | async) === false">
     <mat-toolbar>Menu</mat-toolbar>
+    <img src="../../assets/avatar.png" alt="Avatar" id="avatar">
+    <!-- <span class="avatar-info">Full Name</span>
+    <span class="avatar-info">Email</span> -->
     <mat-nav-list>
+      <p class="avatar-info" mat-list-item>{{fullName + " - " + role | titlecase}}</p>
+      <p class="avatar-info" mat-list-item>{{email}}</p>
       <a *ngFor="let item of menuItems" mat-list-item [routerLink]="'/'+item"> {{item | titlecase}} </a>
       <a mat-list-item style="cursor:pointer" *ngIf="authService.loggedIn()" (click)="authService.logoutUser()">Logout</a>
     </mat-nav-list>

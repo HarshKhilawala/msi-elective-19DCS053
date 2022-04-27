@@ -13,6 +13,13 @@ export class AuthServiceService {
 
   }
 
+  getProjectTable(){
+    return this.webRequestService.get('table');
+  }
+
+  getUserDetails(){
+    return this.webRequestService.get('nav');
+  }
 
   loginUser(credentials:Object){
     return this.webRequestService.post('login',credentials);

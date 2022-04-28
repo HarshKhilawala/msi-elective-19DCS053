@@ -1,12 +1,67 @@
-<div class="mat-elevation-z8 small-table">
+
+<div class="container">
+
+  <div class="border">
+    <button class="btn btn-md btn-outline-primary">
+      <i class="fa fa-plus"></i>Add New Project</button>
+  </div>
+
+  <table class="table table-bordered table-striped">
+    <thead>
+    <tr>
+      <th>ID</th>
+      <th>Project Name</th>
+      <th>Department Code</th>
+      <th>Users</th>
+      <th>Product</th>
+      <th>Status</th>
+      <th>Created At</th>
+      <th>Updated At</th>
+      <th>CIE AreaID</th>
+      <th>Finance ProductID</th>
+      <th>Actions</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let row of dataSource.data">
+      <td><span>{{row.id}}</span></td>
+      <td><span>{{row.project_name}}</span></td>
+      <td><span>{{row.dept_code}}</span></td>
+      <td><span>{{row.users}}</span></td>
+      <td><span>{{row.product}}</span></td>
+      <td><span>{{row.status}}</span></td>
+      <td><span>{{row.createdat}}</span></td>
+      <td><span>{{row.updatedat}}</span></td>
+      <td><span>{{row.cieareaid}}</span></td>
+      <td><span>{{row.financeproductid}}</span></td>
+      <td>
+        <button class="btn btn-sm btn-info">
+          <i class="fa fa-search"></i>Details</button>
+        <button class="btn btn-sm btn-warning">
+          <i class="fa fa-edit"></i>Edit</button>
+        <button class="btn btn-sm btn-danger">
+          <i class="fa fa-remove"></i>Delete</button>
+      </td>
+
+    </tr>
+    </tbody>
+  </table>
+</div>
+
+
+
+<!-- <div class="mat-elevation-z8 small-table">
   <table mat-table class="full-width-table" matSort aria-label="Elements">
-    <!-- Id Column -->
+
+    Id Column
+
     <ng-container matColumnDef="id">
       <th mat-header-cell *matHeaderCellDef mat-sort-header>Id</th>
       <td mat-cell *matCellDef="let row">{{row.id}}</td>
     </ng-container>
 
-    <!-- Name Column -->
+    Name Column
+
     <ng-container matColumnDef="project_name">
       <th mat-header-cell *matHeaderCellDef mat-sort-header>Project Name</th>
       <td mat-cell *matCellDef="let row">{{row.project_name}}</td>
@@ -58,7 +113,7 @@
       [pageSizeOptions]="[5, 10, 20]"
       aria-label="Select page">
   </mat-paginator>
-</div>
+</div> -->
 
 <!-- id: number;
   project_name: string;

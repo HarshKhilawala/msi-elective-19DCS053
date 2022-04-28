@@ -29,6 +29,9 @@ import { AuthGuard } from './auth.guard';
 import { AuthServiceService } from './auth-service.service';
 import { TokenInterceptorService } from './token-interceptor.service';
 
+import { FormsModule } from '@angular/forms';
+
+
 
 @NgModule({
   declarations: [

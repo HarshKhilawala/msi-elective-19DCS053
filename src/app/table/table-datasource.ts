@@ -18,6 +18,7 @@ export interface TableItem {
   product: string;
   status: string;
   updatedat: string;
+  users: [];
 }
 
 // TODO: replace this with real data from your application

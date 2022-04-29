@@ -114,7 +114,7 @@ app.post('/register', (req, res)=>{
       if(err) {
         res.status(400).json({"Reason":"DB Error"});
       } else {
-        let payLoad = {subject:email,};
+        let payLoad = {subject:email};
         let token = jwt.sign(payLoad, 'secret');
         res.status(200).json({"Reason":"User Inserted Successfully.",token});
       }
@@ -124,8 +124,16 @@ app.post('/register', (req, res)=>{
 });
 
 app.post('/singleproject', (req, res)=>{
+
+  let {projectName, deptCode, users, product, status, createdat, cieareaid, financeproductid} = req.body;
   console.log(req.body);
-  console.log("In Backend - single project");
+  client.query(`INSERT INTO projects.projectmanagement(project_name, dept_code, users, product, status, createdat, cieareaid, financeproductid) VALUES($1, $2, $3, $4, $5, $6, $7, $8)`,[projectName, deptCode, users, product, status, createdat, cieareaid, financeproductid],(err,result)=>{
+    if (err) {
+      res.status(400).json({"Reason":"DB Error"});
+    } else {
+      res.status(200).json({"Reason":"Project Details Inserted Successfully."});
+    }
+  });
 });
 
 client.connect().then(()=>{

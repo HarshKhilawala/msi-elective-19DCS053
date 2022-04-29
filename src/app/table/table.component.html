@@ -6,6 +6,8 @@
       <i class="fa fa-plus"></i>Add New Project</button>
   </div>
 
+
+  <!-- Add New Project Modal -->
   <ng-template #content let-modal>
   <div class="modal-header">
     <h4 class="modal-title" id="modal-basic-title">Add New Project</h4>
@@ -56,7 +58,7 @@
               formControlName="users"
               matInput
               required
-              placeholder="{Enter Users}"
+              placeholder="Enter Users separated by comma"
             />
             <mat-error *ngIf="!modalForm.controls['users'].valid">
               Required Users
@@ -82,7 +84,7 @@
         <div>
           <mat-form-field class="full-width" appearance="fill">
             <mat-label>Status</mat-label>
-            <mat-select formControlName="statusOption" required>
+            <mat-select id="statusOption" formControlName="statusOption" required>
               <mat-option *ngFor="let status of statuses" [value]="status.value">
                 {{ status.viewValue }}
               </mat-option>
@@ -125,41 +127,87 @@
           <button data-dismiss="modal" class="btn btn-info">Submit</button>
         </div>
       </form>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-outline-dark" (click)="modal.close('cancel click')">Cancel</button>
+  </div>
+</ng-template>
+<!--  -->
 
-
-
-
-
-
-
-
-    <!-- <form #f="ngForm" (ngSubmit)="onSubmit(f)" novalidate> -->
-      <!-- <div class="form-group">
-        <label for="firstname">Firstname</label>
+<!-- Project Details Modal -->
+<ng-template #contentDetails let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">Project Details</h4>
+    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <form>
+      <div class="form-group">
+        <label for="projectName">Project Name</label>
         <div class="input-group">
-          <input id="firstname" class="form-control" >
+          <input id="projectName" class="form-control" >
         </div>
       </div>
 
       <div class="form-group">
-        <label for="firstname">Firstname</label>
+        <label for="deptCode">Department Code</label>
         <div class="input-group">
-          <input id="firstname" name="firstname" class="form-control" ngModel>
+          <input id="deptCode" name="deptCode" class="form-control">
         </div>
       </div>
       <div class="form-group">
-        <label for="lastname">Lastname</label>
+        <label for="users">Users</label>
         <div class="input-group">
-          <input id="lastname" name="lastname" class="form-control" ngModel>
+          <input id="users" name="users" class="form-control">
         </div>
-      </div> -->
-    <!-- </form> -->
+      </div>
+      <div class="form-group">
+        <label for="product">Product</label>
+        <div class="input-group">
+          <input id="product" name="product" class="form-control">
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="status">Status</label>
+        <div class="input-group">
+          <input id="status" name="status" class="form-control">
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="createdat">CreatedAt</label>
+        <div class="input-group">
+          <input id="createdat" name="createdat" class="form-control">
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="createdat">UpdatedAt</label>
+        <div class="input-group">
+          <input id="createdat" name="createdat" class="form-control">
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="cieareaid">CIE AreaID</label>
+        <div class="input-group">
+          <input id="cieareaid" name="cieareaid" class="form-control">
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="financeproductid">Finance ProductID</label>
+        <div class="input-group">
+          <input id="financeproductid" name="financeproductid" class="form-control">
+        </div>
+      </div>
+    </form>
 
   </div>
   <div class="modal-footer">
     <button type="button" class="btn btn-outline-dark" (click)="modal.close('cancel click')">Cancel</button>
   </div>
 </ng-template>
+<!-- -->
+
 
   <table class="table table-bordered table-striped">
     <thead>
@@ -184,13 +232,13 @@
       <td><span>{{row.dept_code}}</span></td>
       <td><span>{{row.users}}</span></td>
       <td><span>{{row.product}}</span></td>
-      <td><span>{{row.status}}</span></td>
+      <td><span>{{row.status?"Active":"Closed"}}</span></td>
       <td><span>{{row.createdat}}</span></td>
       <td><span>{{row.updatedat}}</span></td>
       <td><span>{{row.cieareaid}}</span></td>
       <td><span>{{row.financeproductid}}</span></td>
       <td>
-        <button class="btn btn-sm btn-info">
+        <button class="btn btn-sm btn-info" (click)="openDetails(contentDetails, row)">
           <i class="fa fa-search"></i>Details</button>
         <button class="btn btn-sm btn-warning">
           <i class="fa fa-edit"></i>Edit</button>

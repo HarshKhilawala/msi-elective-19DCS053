@@ -79,6 +79,28 @@ export class TableComponent implements AfterViewInit {
     });
   }
 
+  openDetails(targetModal:any, project:any){
+    this.modalService.open(targetModal, {
+      centered: true,
+      backdrop: 'static',
+      size: 'lg'
+    });
+
+    console.log(project);
+
+    document.getElementById('projectName')?.setAttribute('value', project.project_name);
+    document.getElementById('deptCode')?.setAttribute('value', project.dept_code);
+    document.getElementById('users')?.setAttribute('value', project.users);
+    document.getElementById('product')?.setAttribute('value', project.product);
+    document.getElementById('status')?.setAttribute('value', project.status);
+    document.getElementById('createdat')?.setAttribute('value', project.createdat);
+    document.getElementById('updatedat')?.setAttribute('value', project.updatedat);
+    document.getElementById('cieareaid')?.setAttribute('value', project.cieareaid);
+    document.getElementById('financeproductid')?.setAttribute('value', project.financeproductid);
+
+
+  }
+
   onSubmit(){
     if(!this.modalForm.valid) {
       return;
@@ -86,20 +108,23 @@ export class TableComponent implements AfterViewInit {
 
     let projectName = this.modalForm.value.projectName;
     let deptCode = this.modalForm.value.deptCode;
-    let users = this.modalForm.value.users;
+    let users = "{"+ this.modalForm.value.users + "}";
     let product = this.modalForm.value.product;
     let status = this.modalForm.value.statusOption;
-    let cieareaid = this.modalForm.value.cieareaid;
-    let financeproductid = this.modalForm.value.financeproductid;
+    let cieareaid = Number(this.modalForm.value.cieareaid);
+    let financeproductid = Number(this.modalForm.value.financeproductid);
     let createdat = new Date();
 
     let modalValueObj = {projectName, deptCode, users, product, status, createdat, cieareaid, financeproductid};
 
     this.authService.addSingleProject(modalValueObj).subscribe((response:any)=>{
       console.log(response);
+      this.ngOnInit();
     }, error=>{
       console.log(error.error.message);
     });
+
+    this.modalService.dismissAll();
 
   }
 

@@ -30,6 +30,7 @@ import { AuthServiceService } from './auth-service.service';
 import { TokenInterceptorService } from './token-interceptor.service';
 
 import { FormsModule } from '@angular/forms';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 
 
@@ -62,6 +63,7 @@ import { FormsModule } from '@angular/forms';
     MatToolbarModule,
     MatSidenavModule,
     MatSelectModule,
+    NgbModule,
   ],
   providers: [AuthServiceService, AuthGuard, {
     provide: HTTP_INTERCEPTORS,

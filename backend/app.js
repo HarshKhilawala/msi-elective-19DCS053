@@ -71,7 +71,7 @@ app.get("/table", verifyToken, (req, res)=>{
     if(err){
       res.status(400).json({"Reason":"Error in DB"});
     } else {
-      console.log(result.rows);
+      // console.log(result.rows);
       res.status(200).json({table: result.rows});
     }
   });
@@ -121,6 +121,11 @@ app.post('/register', (req, res)=>{
     });
   });
 
+});
+
+app.post('/singleproject', (req, res)=>{
+  console.log(req.body);
+  console.log("In Backend - single project");
 });
 
 client.connect().then(()=>{

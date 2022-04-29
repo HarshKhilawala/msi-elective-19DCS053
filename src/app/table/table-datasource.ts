@@ -16,7 +16,7 @@ export interface TableItem {
   createdat: string;
   financeproductid: number;
   product: string;
-  status: string;
+  status: boolean;
   updatedat: string;
   users: [];
 }

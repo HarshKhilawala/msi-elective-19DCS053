@@ -17,6 +17,10 @@ export class AuthServiceService {
     return this.webRequestService.get('table');
   }
 
+  addSingleProject(projectDetails:Object){
+    return this.webRequestService.post('singleproject', projectDetails);
+  }
+
   getUserDetails(){
     return this.webRequestService.get('nav');
   }

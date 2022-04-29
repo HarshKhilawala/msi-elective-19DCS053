@@ -2,9 +2,164 @@
 <div class="container">
 
   <div class="border">
-    <button class="btn btn-md btn-outline-primary">
+    <button class="btn btn-md btn-outline-primary" (click)="open(content)">
       <i class="fa fa-plus"></i>Add New Project</button>
   </div>
+
+  <ng-template #content let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">Add New Project</h4>
+    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+
+
+    <form
+        (ngSubmit)="onSubmit()"
+        name="modalForm"
+        [formGroup]="modalForm"
+      >
+      <div class="project-input">
+        <mat-form-field class="full-width" appearance="outline">
+          <mat-label>Project Name</mat-label>
+          <input
+            formControlName="projectName"
+            matInput
+            required
+            placeholder="Enter Project Name"
+          />
+          <mat-error *ngIf="!modalForm.controls['projectName'].valid">
+            Required Project Name
+          </mat-error>
+        </mat-form-field>
+      </div>
+       <div>
+          <mat-form-field class="full-width" appearance="outline">
+            <mat-label>Department Code</mat-label>
+            <input
+              formControlName="deptCode"
+              matInput
+              required
+              placeholder="Enter Department Code"
+            />
+            <mat-error *ngIf="!modalForm.controls['deptCode'].valid">
+              Required Department Code
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <div>
+          <mat-form-field class="full-width" appearance="outline">
+            <mat-label>Users</mat-label>
+            <input
+              formControlName="users"
+              matInput
+              required
+              placeholder="{Enter Users}"
+            />
+            <mat-error *ngIf="!modalForm.controls['users'].valid">
+              Required Users
+            </mat-error>
+          </mat-form-field>
+        </div>
+
+        <div>
+          <mat-form-field class="full-width" appearance="outline">
+            <mat-label>Product</mat-label>
+            <input
+              formControlName="product"
+              matInput
+              required
+              placeholder="Enter Product"
+            />
+            <mat-error *ngIf="!modalForm.controls['product'].valid">
+              Required Product
+            </mat-error>
+          </mat-form-field>
+        </div>
+
+        <div>
+          <mat-form-field class="full-width" appearance="fill">
+            <mat-label>Status</mat-label>
+            <mat-select formControlName="statusOption" required>
+              <mat-option *ngFor="let status of statuses" [value]="status.value">
+                {{ status.viewValue }}
+              </mat-option>
+            </mat-select>
+            <mat-error *ngIf="!modalForm.controls['statusOption'].valid">Please choose the status.</mat-error>
+          </mat-form-field>
+        </div>
+
+        <div>
+          <mat-form-field class="full-width" appearance="outline">
+            <mat-label>CIE Area ID</mat-label>
+            <input
+              formControlName="cieareaid"
+              matInput
+              required
+              placeholder="Enter CIE AreaID"
+            />
+            <mat-error *ngIf="!modalForm.controls['cieareaid'].valid">
+              Required CIE AreaID
+            </mat-error>
+          </mat-form-field>
+        </div>
+
+        <div>
+          <mat-form-field class="full-width" appearance="outline">
+            <mat-label>Finance ProductID</mat-label>
+            <input
+              formControlName="financeproductid"
+              matInput
+              required
+              placeholder="Enter Finance ProductID"
+            />
+            <mat-error *ngIf="!modalForm.controls['financeproductid'].valid">
+              Required Finance ProductID
+            </mat-error>
+          </mat-form-field>
+        </div>
+
+        <div class="border text-center">
+          <button data-dismiss="modal" class="btn btn-info">Submit</button>
+        </div>
+      </form>
+
+
+
+
+
+
+
+
+    <!-- <form #f="ngForm" (ngSubmit)="onSubmit(f)" novalidate> -->
+      <!-- <div class="form-group">
+        <label for="firstname">Firstname</label>
+        <div class="input-group">
+          <input id="firstname" class="form-control" >
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="firstname">Firstname</label>
+        <div class="input-group">
+          <input id="firstname" name="firstname" class="form-control" ngModel>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="lastname">Lastname</label>
+        <div class="input-group">
+          <input id="lastname" name="lastname" class="form-control" ngModel>
+        </div>
+      </div> -->
+    <!-- </form> -->
+
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-outline-dark" (click)="modal.close('cancel click')">Cancel</button>
+  </div>
+</ng-template>
 
   <table class="table table-bordered table-striped">
     <thead>

@@ -44,7 +44,7 @@ export class RegisterComponent implements OnInit {
       password: new FormControl('',[Validators.required, Validators.minLength(8)]),
       userRole: new FormControl('',Validators.required),
     }
-  )
+  );
 
 
 

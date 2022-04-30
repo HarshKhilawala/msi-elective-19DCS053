@@ -8,9 +8,16 @@
     <!-- <span class="avatar-info">Full Name</span>
     <span class="avatar-info">Email</span> -->
     <mat-nav-list>
+      <br>
       <p class="avatar-info" mat-list-item>{{fullName + " - " + role | titlecase}}</p>
       <p class="avatar-info" mat-list-item>{{email}}</p>
-      <a *ngFor="let item of menuItems" mat-list-item [routerLink]="'/'+item"> {{item | titlecase}} </a>
+      <br><br>
+      <a mat-list-item [routerLink]="'/dashboard'">Project Dashboard</a>
+      <a mat-list-item *ngIf="role==='Admin'" [routerLink]="'/register'">Register New User</a>
+      <a mat-list-item *ngIf="role==='Admin'" [routerLink]="'/import'">Bulk Import Project Details</a>
+      <!-- <a mat-list-item [routerLink]="'/'">Register New User</a> -->
+
+
       <a mat-list-item style="cursor:pointer" *ngIf="authService.loggedIn()" (click)="authService.logoutUser()">Logout</a>
     </mat-nav-list>
   </mat-sidenav>

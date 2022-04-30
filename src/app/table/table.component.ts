@@ -27,6 +27,7 @@ export class TableComponent implements AfterViewInit {
   /** Columns displayed in the table. Columns IDs can be added, removed, or reordered. */
   displayedColumns = ['id', 'project_name','dept_code', 'users', 'product', 'status', 'createdat', 'cieareaid', 'financeproductid'];
   tableData = []
+
   closeResult = "";
   editID = 0;
   deleteID = 0;
@@ -37,6 +38,13 @@ export class TableComponent implements AfterViewInit {
     {value: true, viewValue: 'Active'},
     {value: false, viewValue: 'Finished/Closed'},
   ];
+
+
+  // Panel User Details
+  fullName:string = "";
+  email:string = "";
+  role:string = "";
+
 
   constructor(private authService:AuthServiceService, private modalService:NgbModal, private fb:FormBuilder) {
     this.dataSource = new TableDataSource(this.tableData);
@@ -50,8 +58,10 @@ export class TableComponent implements AfterViewInit {
   }
 
   ngOnInit(): void {
+    this.getUserData();
     this.getTableData();
     this.dataSource.data = this.tableData;
+    this.allChecked=false;
   }
 
   modalForm: FormGroup = this.fb.group({
@@ -74,6 +84,16 @@ export class TableComponent implements AfterViewInit {
     cieareaid: new FormControl('',[Validators.required]),
     financeproductid: new FormControl('',[Validators.required]),
   });
+
+  getUserData(){
+    this.authService.getUserDetails().subscribe((response:any)=>{
+      this.fullName = response.name;
+      this.email = response.email;
+      this.role = response.role;
+    },error=>{
+      console.log(error.error.message);
+    });
+  }
 
   getTableData(){
     this.authService.getProjectTable().subscribe((response:any)=>{

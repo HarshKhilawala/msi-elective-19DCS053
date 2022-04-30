@@ -62,7 +62,7 @@ export class RegisterComponent implements OnInit {
       console.log(response);
       localStorage.setItem('token', response.token);
       this.btnColor = true;
-      // this.router.navigate(['/nav']);
+      this.router.navigate(['/nav']);
     }, error=>{
       console.log(error.error.message);
       this.btnColor = false;

@@ -30,3 +30,7 @@ table .btn{
 .checkbox-margin {
   margin: 0 12px;
 }
+
+.modal-buttons {
+  padding: 10px;
+}

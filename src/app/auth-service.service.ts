@@ -29,6 +29,10 @@ export class AuthServiceService {
     return this.webRequestService.deleteOne('deletesingleproject', projectDetails);
   }
 
+  deleteMultipleProjects(projectDetails:Object){
+    return this.webRequestService.deleteMultiple('deletemultipleprojects', projectDetails);
+  }
+
   getUserDetails(){
     return this.webRequestService.get('nav');
   }

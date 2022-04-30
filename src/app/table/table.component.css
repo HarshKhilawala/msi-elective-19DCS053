@@ -27,3 +27,6 @@ table .btn{
   width: 100%;
 }
 
+.checkbox-margin {
+  margin: 0 12px;
+}

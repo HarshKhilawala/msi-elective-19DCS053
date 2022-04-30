@@ -28,6 +28,8 @@ import {MatSelectModule} from '@angular/material/select';
 import { AuthGuard } from './auth.guard';
 import { AuthServiceService } from './auth-service.service';
 import { TokenInterceptorService } from './token-interceptor.service';
+import {MatCheckboxModule} from '@angular/material/checkbox';
+
 
 import { FormsModule } from '@angular/forms';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
@@ -64,6 +66,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
     MatSidenavModule,
     MatSelectModule,
     NgbModule,
+    MatCheckboxModule
   ],
   providers: [AuthServiceService, AuthGuard, {
     provide: HTTP_INTERCEPTORS,

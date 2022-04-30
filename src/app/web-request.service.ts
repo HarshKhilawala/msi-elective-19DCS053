@@ -32,6 +32,10 @@ export class WebRequestService {
     return this.httpClient.post(`${this.ROOT_URL}/${uri}`, payload);
   }
 
+  deleteMultiple(uri:string, payload:Object){
+    return this.httpClient.post(`${this.ROOT_URL}/${uri}`, payload);
+  }
+
   delete(uri: string){
     return this.httpClient.delete(`${this.ROOT_URL}/${uri}`);
   }

@@ -30,6 +30,8 @@ export class TableComponent implements AfterViewInit {
   closeResult = "";
   editID = 0;
   deleteID = 0;
+  allChecked = false;
+  checkedProjects:Number[] = [];
 
   statuses: Status[] = [
     {value: true, viewValue: 'Active'},
@@ -208,6 +210,52 @@ export class TableComponent implements AfterViewInit {
     });
 
     this.modalService.dismissAll();
+  }
+
+  onMultipleDelete(){
+    let deleteObj = {ids:this.checkedProjects}
+    this.authService.deleteMultipleProjects(deleteObj).subscribe((response:any)=>{
+      console.log(response);
+      this.ngOnInit();
+      this.modalService.dismissAll();
+      this.checkedProjects = [];
+    },error=>{
+      console.log(error.error.message);
+    });
+
+    this.modalService.dismissAll();
+  }
+
+  setAll(checked: boolean) {
+    this.allChecked = checked;
+
+    if(checked) {
+      this.dataSource.data.forEach(dataItem=>{
+        if(!this.checkedProjects.includes(dataItem.id)){
+          this.checkedProjects.push(dataItem.id);
+        }
+      });
+      console.log(this.checkedProjects);
+    } else {
+      this.checkedProjects = [];
+      console.log(this.checkedProjects);
+    }
+  }
+
+  updateAllCheckbox(){
+
+  }
+
+  checkChange(project:any, checked: boolean){
+    if (checked && !this.checkedProjects.includes(project.id)) {
+      this.checkedProjects.push(project.id);
+      console.log(this.checkedProjects);
+    } else {
+      let index = this.checkedProjects.indexOf(project.id);
+      console.log(index);
+      this.checkedProjects.splice(index,1);
+      console.log(this.checkedProjects);
+    }
   }
 
 

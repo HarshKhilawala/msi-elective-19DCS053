@@ -158,6 +158,23 @@ app.post('/deletesingleproject', (req, res)=>{
   });
 });
 
+app.post('/deletemultipleprojects', (req, res)=>{
+  let ids = req.body.ids;
+
+  ids.forEach(id=>{
+    client.query(`DELETE FROM projects.projectmanagement WHERE id in ($1)`,[id], (err,result)=>{
+      if(err){
+        res.status(400).json({"Reason":"DB Error"});
+      } else {
+
+      }
+    });
+  });
+
+  res.status(200).json({"Reason":"Projects Deleted Successfully"});
+
+});
+
 client.connect().then(()=>{
   console.log("Database Connected!");
   app.listen(ports,()=>{

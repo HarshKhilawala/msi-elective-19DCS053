@@ -28,11 +28,16 @@ import {MatSelectModule} from '@angular/material/select';
 import { AuthGuard } from './auth.guard';
 import { AuthServiceService } from './auth-service.service';
 import { TokenInterceptorService } from './token-interceptor.service';
-import {MatCheckboxModule} from '@angular/material/checkbox';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatTableExporterModule } from 'mat-table-exporter';
+import { CdkTableExporterModule } from 'cdk-table-exporter';
+
 
 
 import { FormsModule } from '@angular/forms';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { ImportComponent } from './import/import.component';
+import { MyTableComponent } from './my-table/my-table.component';
 
 
 
@@ -44,6 +49,8 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
     RegisterComponent,
     TableComponent,
     NavComponent,
+    ImportComponent,
+    MyTableComponent,
   ],
   imports: [
     BrowserModule,
@@ -66,7 +73,8 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
     MatSidenavModule,
     MatSelectModule,
     NgbModule,
-    MatCheckboxModule
+    MatCheckboxModule,
+    MatTableExporterModule,
   ],
   providers: [AuthServiceService, AuthGuard, {
     provide: HTTP_INTERCEPTORS,

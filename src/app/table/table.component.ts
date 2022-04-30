@@ -25,7 +25,7 @@ export class TableComponent implements AfterViewInit {
   dataSource: TableDataSource;
 
   /** Columns displayed in the table. Columns IDs can be added, removed, or reordered. */
-  displayedColumns = ['id', 'project_name','dept_code', 'users', 'product', 'status', 'createdat', 'cieareaid', 'financeproductid'];
+  displayedColumns = ['select','id', 'project_name','dept_code', 'users', 'product', 'status', 'createdat', 'cieareaid', 'financeproductid', 'actions'];
   tableData = []
 
   closeResult = "";
@@ -53,7 +53,7 @@ export class TableComponent implements AfterViewInit {
   ngAfterViewInit(): void {
     this.dataSource.sort = this.sort;
     this.dataSource.paginator = this.paginator;
-    // this.table.dataSource = this.dataSource;
+    this.table.dataSource = this.dataSource;
 
   }
 

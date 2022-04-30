@@ -21,6 +21,14 @@ export class AuthServiceService {
     return this.webRequestService.post('singleproject', projectDetails);
   }
 
+  updateSingleProject(projectDetails:Object){
+    return this.webRequestService.put('singleproject', projectDetails);
+  }
+
+  deleteSingleProject(projectDetails:Object){
+    return this.webRequestService.deleteOne('deletesingleproject', projectDetails);
+  }
+
   getUserDetails(){
     return this.webRequestService.get('nav');
   }

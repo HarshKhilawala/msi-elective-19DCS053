@@ -209,6 +209,154 @@
 <!-- -->
 
 
+<!-- Edit Project Details Modal -->
+<ng-template #contentEdit let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">Edit Project Details</h4>
+    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+
+
+    <form
+        (ngSubmit)="onSaveChanges()"
+        name="editForm"
+        [formGroup]="editForm"
+      >
+      <div class="project-input">
+        <mat-form-field class="full-width" appearance="outline">
+          <mat-label>Project Name</mat-label>
+          <input
+            formControlName="projectName"
+            matInput
+            required
+            placeholder="Enter Project Name"
+          />
+          <mat-error *ngIf="!editForm.controls['projectName'].valid">
+            Required Project Name
+          </mat-error>
+        </mat-form-field>
+      </div>
+       <div>
+          <mat-form-field class="full-width" appearance="outline">
+            <mat-label>Department Code</mat-label>
+            <input
+              formControlName="deptCode"
+              matInput
+              required
+              placeholder="Enter Department Code"
+            />
+            <mat-error *ngIf="!editForm.controls['deptCode'].valid">
+              Required Department Code
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <div>
+          <mat-form-field class="full-width" appearance="outline">
+            <mat-label>Users</mat-label>
+            <input
+              formControlName="users"
+              matInput
+              required
+              placeholder="Enter Users separated by comma"
+            />
+            <mat-error *ngIf="!editForm.controls['users'].valid">
+              Required Users
+            </mat-error>
+          </mat-form-field>
+        </div>
+
+        <div>
+          <mat-form-field class="full-width" appearance="outline">
+            <mat-label>Product</mat-label>
+            <input
+              formControlName="product"
+              matInput
+              required
+              placeholder="Enter Product"
+            />
+            <mat-error *ngIf="!editForm.controls['product'].valid">
+              Required Product
+            </mat-error>
+          </mat-form-field>
+        </div>
+
+        <div>
+          <mat-form-field class="full-width" appearance="fill">
+            <mat-label>Status</mat-label>
+            <mat-select id="statusOption" formControlName="statusOption" required>
+              <mat-option *ngFor="let status of statuses" [value]="status.value">
+                {{ status.viewValue }}
+              </mat-option>
+            </mat-select>
+            <mat-error *ngIf="!editForm.controls['statusOption'].valid">Please choose the status.</mat-error>
+          </mat-form-field>
+        </div>
+
+        <div>
+          <mat-form-field class="full-width" appearance="outline">
+            <mat-label>CIE Area ID</mat-label>
+            <input
+              formControlName="cieareaid"
+              matInput
+              required
+              placeholder="Enter CIE AreaID"
+            />
+            <mat-error *ngIf="!editForm.controls['cieareaid'].valid">
+              Required CIE AreaID
+            </mat-error>
+          </mat-form-field>
+        </div>
+
+        <div>
+          <mat-form-field class="full-width" appearance="outline">
+            <mat-label>Finance ProductID</mat-label>
+            <input
+              formControlName="financeproductid"
+              matInput
+              required
+              placeholder="Enter Finance ProductID"
+            />
+            <mat-error *ngIf="!editForm.controls['financeproductid'].valid">
+              Required Finance ProductID
+            </mat-error>
+          </mat-form-field>
+        </div>
+
+        <div class="border text-center">
+          <button data-dismiss="modal" class="btn btn-info">Save Changes</button>
+        </div>
+      </form>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-outline-dark" (click)="modal.close('cancel click')">Cancel</button>
+  </div>
+</ng-template>
+<!--  -->
+
+<!-- Delete Project/s Modal -->
+<ng-template #contentDelete let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">Delete selected Project/s</h4>
+    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <h2>Are you sure you want to delete the records?</h2>
+    <div class="border text-center">
+      <button data-dismiss="modal" class="btn btn-danger" (click)="onDelete()">Confirm</button>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-outline-dark" (click)="modal.close('cancel click')">Cancel</button>
+  </div>
+</ng-template>
+<!--  -->
+
+
   <table class="table table-bordered table-striped">
     <thead>
     <tr>
@@ -240,9 +388,9 @@
       <td>
         <button class="btn btn-sm btn-info" (click)="openDetails(contentDetails, row)">
           <i class="fa fa-search"></i>Details</button>
-        <button class="btn btn-sm btn-warning">
+        <button class="btn btn-sm btn-warning" (click)="openEdit(contentEdit, row)">
           <i class="fa fa-edit"></i>Edit</button>
-        <button class="btn btn-sm btn-danger">
+        <button class="btn btn-sm btn-danger" (click)="openDelete(contentDelete,row)">
           <i class="fa fa-remove"></i>Delete</button>
       </td>
 
@@ -250,80 +398,3 @@
     </tbody>
   </table>
 </div>
-
-
-
-<!-- <div class="mat-elevation-z8 small-table">
-  <table mat-table class="full-width-table" matSort aria-label="Elements">
-
-    Id Column
-
-    <ng-container matColumnDef="id">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header>Id</th>
-      <td mat-cell *matCellDef="let row">{{row.id}}</td>
-    </ng-container>
-
-    Name Column
-
-    <ng-container matColumnDef="project_name">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header>Project Name</th>
-      <td mat-cell *matCellDef="let row">{{row.project_name}}</td>
-    </ng-container>
-
-    <ng-container matColumnDef="dept_code">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header>Department Code</th>
-      <td mat-cell *matCellDef="let row">{{row.dept_code}}</td>
-    </ng-container>
-
-    <ng-container matColumnDef="users">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header>Users</th>
-      <td mat-cell *matCellDef="let row">{{row.users}}</td>
-    </ng-container>
-
-    <ng-container matColumnDef="product">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header>Product</th>
-      <td mat-cell *matCellDef="let row">{{row.product}}</td>
-    </ng-container>
-
-    <ng-container matColumnDef="status">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header>Status</th>
-      <td mat-cell *matCellDef="let row">{{row.status}}</td>
-    </ng-container>
-
-    <ng-container matColumnDef="createdat">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header>Created At</th>
-      <td mat-cell *matCellDef="let row">{{row.createdat}}</td>
-    </ng-container>
-
-    <ng-container matColumnDef="cieareaid">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header>CIE AreaID</th>
-      <td mat-cell *matCellDef="let row">{{row.cieareaid}}</td>
-    </ng-container>
-
-    <ng-container matColumnDef="financeproductid">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header>Finance ProductID</th>
-      <td mat-cell *matCellDef="let row">{{row.financeproductid}}</td>
-    </ng-container>
-
-    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-  </table>
-
-  <mat-paginator #paginator
-      [length]="tableData?.length"
-      [pageIndex]="0"
-      [pageSize]="10"
-      [pageSizeOptions]="[5, 10, 20]"
-      aria-label="Select page">
-  </mat-paginator>
-</div> -->
-
-<!-- id: number;
-  project_name: string;
-  cieareaid: number;
-  dept_code: string;
-  createdat: string;
-  financeproductid: number;
-  product: string;
-  status: string;
-  updatedat: string; -->

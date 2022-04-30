@@ -136,6 +136,28 @@ app.post('/singleproject', (req, res)=>{
   });
 });
 
+app.put('/singleproject', (req, res)=>{
+  let {id, projectName, deptCode, users, product, status, updatedat, cieareaid, financeproductid} = req.body;
+  client.query(`UPDATE projects.projectmanagement SET project_name = $1, dept_code = $2, users = $3, product = $4, status = $5, updatedat = $6, cieareaid = $7, financeproductid = $8 WHERE id = $9`,[projectName, deptCode, users, product, status, updatedat, cieareaid, financeproductid, id],(err, result)=>{
+    if (err) {
+      res.status(400).json({"Reason":"DB Error"});
+    } else {
+      res.status(200).json({"Reason":"Project Detatils Updated Successfully."});
+    }
+  });
+});
+
+app.post('/deletesingleproject', (req, res)=>{
+  let id = req.body.id;
+  client.query(`DELETE FROM projects.projectmanagement WHERE id = $1`,[id], (err,result)=>{
+    if (err) {
+      res.status(400).json({"Reason": "DB Error"});
+    } else {
+      res.status(200).json({"Reason": "Project Deleted Successfully"});
+    }
+  });
+});
+
 client.connect().then(()=>{
   console.log("Database Connected!");
   app.listen(ports,()=>{

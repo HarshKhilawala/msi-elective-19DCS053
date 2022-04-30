@@ -24,6 +24,14 @@ export class WebRequestService {
     return this.httpClient.patch(`${this.ROOT_URL}/${uri}`,payload);
   }
 
+  put(uri: string, payload:Object){
+    return this.httpClient.put(`${this.ROOT_URL}/${uri}`,payload);
+  }
+
+  deleteOne(uri: string, payload:Object){
+    return this.httpClient.post(`${this.ROOT_URL}/${uri}`, payload);
+  }
+
   delete(uri: string){
     return this.httpClient.delete(`${this.ROOT_URL}/${uri}`);
   }

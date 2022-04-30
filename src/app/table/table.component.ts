@@ -28,6 +28,8 @@ export class TableComponent implements AfterViewInit {
   displayedColumns = ['id', 'project_name','dept_code', 'users', 'product', 'status', 'createdat', 'cieareaid', 'financeproductid'];
   tableData = []
   closeResult = "";
+  editID = 0;
+  deleteID = 0;
 
   statuses: Status[] = [
     {value: true, viewValue: 'Active'},
@@ -59,6 +61,16 @@ export class TableComponent implements AfterViewInit {
     cieareaid: new FormControl('',[Validators.required]),
     financeproductid: new FormControl('',[Validators.required]),
 
+  });
+
+  editForm: FormGroup = this.fb.group({
+    projectName: new FormControl('',[Validators.required]),
+    deptCode: new FormControl('',[Validators.required]),
+    users: new FormControl('',[Validators.required]),
+    product: new FormControl('',[Validators.required]),
+    statusOption: new FormControl('',Validators.required),
+    cieareaid: new FormControl('',[Validators.required]),
+    financeproductid: new FormControl('',[Validators.required]),
   });
 
   getTableData(){
@@ -97,8 +109,36 @@ export class TableComponent implements AfterViewInit {
     document.getElementById('updatedat')?.setAttribute('value', project.updatedat);
     document.getElementById('cieareaid')?.setAttribute('value', project.cieareaid);
     document.getElementById('financeproductid')?.setAttribute('value', project.financeproductid);
+  }
 
+  openEdit(targetModal:any, project:any){
+    this.modalService.open(targetModal, {
+      centered: true,
+      backdrop: 'static',
+      size: 'lg'
+    });
+    // console.log(project);
+    this.editForm.patchValue({
+      projectName: project.project_name,
+      deptCode: project.dept_code,
+      users: project.users,
+      product: project.product,
+      statusOption: project.status,
+      cieareaid: project.cieareaid,
+      financeproductid: project.financeproductid,
+    });
 
+    this.editID = project.id;
+    // Disabling Project Name Form Control Input to avoid changes
+    // this.editForm.controls['projectName'].disable();
+  }
+
+  openDelete(targetModal:any, project:any){
+    this.deleteID = project.id;
+    this.modalService.open(targetModal, {
+      backdrop: 'static',
+      size: 'lg'
+    });
   }
 
   onSubmit(){
@@ -126,6 +166,48 @@ export class TableComponent implements AfterViewInit {
 
     this.modalService.dismissAll();
 
+  }
+
+  onSaveChanges(){
+    if(!this.editForm.valid) {
+      return;
+    }
+    // Enabling back Project Name - Form Control to fetch value
+    // this.editForm.controls['projectName'].enable();
+
+    let id = this.editID;
+    let projectName = this.editForm.value.projectName;
+    let deptCode = this.editForm.value.deptCode;
+    let users = "{"+ this.editForm.value.users + "}";
+    let product = this.editForm.value.product;
+    let status = this.editForm.value.statusOption;
+    let cieareaid = Number(this.editForm.value.cieareaid);
+    let financeproductid = Number(this.editForm.value.financeproductid);
+    let updatedat = new Date();
+
+    let modalValueObj = {id, projectName, deptCode, users, product, status, updatedat, cieareaid, financeproductid};
+    console.log(modalValueObj);
+    this.authService.updateSingleProject(modalValueObj).subscribe((response:any)=>{
+      console.log(response);
+      this.ngOnInit();
+    }, error=>{
+      console.log(error.error.message);
+    });
+
+    this.modalService.dismissAll();
+  }
+
+  onDelete(){
+    let deleteObj = {id:this.deleteID};
+    console.log(deleteObj);
+    this.authService.deleteSingleProject(deleteObj).subscribe((response:any)=>{
+      console.log(response);
+      this.ngOnInit();
+    },error=>{
+      console.log(error.error.message);
+    });
+
+    this.modalService.dismissAll();
   }
 
 

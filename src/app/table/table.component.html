@@ -2,9 +2,9 @@
 <div class="container">
 
   <div class="border">
-    <button class="btn btn-md btn-outline-primary" (click)="open(content)">
+    <button class="btn btn-md btn-primary" (click)="open(content)">
       <i class="fa fa-plus"></i>Add New Project</button>
-    <button class="btn btn-md btn-outline-danger" (click)="open(contentMultipleDelete)">
+    <button class="btn btn-md btn-danger" (click)="open(contentMultipleDelete)">
       <i class="fa fa-trash"></i>Delete Selected Projects</button>
   </div>
 
@@ -382,11 +382,19 @@
   <table class="table table-bordered table-striped">
     <thead>
     <tr>
-      <th>Select <mat-checkbox class="checkbox-margin"
+
+      <!-- <th>Select <mat-checkbox class="checkbox-margin"
         [checked]="allChecked"
         (change)="setAll($event.checked)"
         [color]="'primary'">
-      </mat-checkbox></th>
+      </mat-checkbox></th> -->
+
+
+
+      <th>
+        <button mat-raised-button color="primary" *ngIf="!allChecked" (click)="setAll(true)">Select All</button>
+        <button mat-raised-button color="primary" *ngIf="allChecked" (click)="setAll(false)">Unselect All</button>
+      </th>
       <th>ID</th>
       <th>Project Name</th>
       <th>Department Code</th>

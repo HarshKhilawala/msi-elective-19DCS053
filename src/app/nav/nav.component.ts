@@ -3,6 +3,8 @@ import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { Observable } from 'rxjs';
 import { map, shareReplay } from 'rxjs/operators';
 import { AuthServiceService } from '../auth-service.service';
+import { HttpErrorResponse } from '@angular/common/http';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-nav',
@@ -24,7 +26,7 @@ export class NavComponent {
     );
 
     //Public authService - usecase in nav.component.html
-  constructor(public authService:AuthServiceService,private breakpointObserver: BreakpointObserver) {}
+  constructor(public authService:AuthServiceService,private breakpointObserver: BreakpointObserver, private router:Router) {}
 
   ngOnInit(): void {
     this.getUserData();
@@ -37,10 +39,12 @@ export class NavComponent {
       this.role = response.role;
     },error=>{
       console.log(error.error.message);
+      if(error instanceof HttpErrorResponse){
+        if (error.status===400) {
+          this.router.navigate(['/']);
+        }
+      }
     });
   }
 
-
-
-  ///! Pending ! => Verification of Token
 }

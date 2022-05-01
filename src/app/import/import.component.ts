@@ -30,7 +30,7 @@ export class ImportComponent implements OnInit {
       console.log(formData);
       this.authService.importProjectDetails(formData).subscribe((response:any)=>{
         console.log(response);
-        this.router.navigate(['/nav']);
+        // this.router.navigate(['/nav']);
       }, error=>{
         console.log(error.error.message);
       });

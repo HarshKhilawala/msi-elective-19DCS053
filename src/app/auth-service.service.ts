@@ -33,6 +33,10 @@ export class AuthServiceService {
     return this.webRequestService.deleteMultiple('deletemultipleprojects', projectDetails);
   }
 
+  importProjectDetails(projectDetails:Object){
+    return this.webRequestService.post('importcsv', projectDetails);
+  }
+
   getUserDetails(){
     return this.webRequestService.get('nav');
   }

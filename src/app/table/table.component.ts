@@ -25,7 +25,7 @@ export class TableComponent implements AfterViewInit {
   dataSource: TableDataSource;
 
   /** Columns displayed in the table. Columns IDs can be added, removed, or reordered. */
-  displayedColumns = ['select','id', 'project_name','dept_code', 'users', 'product', 'status', 'createdat', 'cieareaid', 'financeproductid', 'actions'];
+  displayedColumns = ['select','id', 'project_name','dept_code', 'users', 'product', 'status', 'createdat', 'updatedat', 'cieareaid', 'financeproductid', 'actions'];
   tableData = []
 
   closeResult = "";

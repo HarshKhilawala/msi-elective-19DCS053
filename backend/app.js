@@ -3,13 +3,14 @@ const bodyParser = require('body-parser');
 const client = require('./database/db.js');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
-const e = require('express');
+const fileupload = require('express-fileupload');
 
 const app = express();
 const ports = process.env.PORT || 3000;
 
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({extended:true}));
+app.use(fileupload());
 
 app.use((req,res, next)=>{
   res.setHeader('Access-Control-Allow-Origin','*');
@@ -174,6 +175,14 @@ app.post('/deletemultipleprojects', (req, res)=>{
   res.status(200).json({"Reason":"Projects Deleted Successfully"});
 
 });
+
+app.post('/importcsv', (req, res)=>{
+  let file = req['files'].file;
+  console.log("File Uploaded: ", file.name);
+
+  res.status(200).json({"Reason":`Fill Uploaded: ${file.name} Successfully`});
+});
+
 
 client.connect().then(()=>{
   console.log("Database Connected!");

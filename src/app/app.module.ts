@@ -31,13 +31,11 @@ import { TokenInterceptorService } from './token-interceptor.service';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatTableExporterModule } from 'mat-table-exporter';
 import { CdkTableExporterModule } from 'cdk-table-exporter';
-
-
+import { MatTableExporterDirective } from 'mat-table-exporter';
 
 import { FormsModule } from '@angular/forms';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { ImportComponent } from './import/import.component';
-import { MyTableComponent } from './my-table/my-table.component';
 
 
 
@@ -50,7 +48,6 @@ import { MyTableComponent } from './my-table/my-table.component';
     TableComponent,
     NavComponent,
     ImportComponent,
-    MyTableComponent,
   ],
   imports: [
     BrowserModule,
@@ -75,6 +72,7 @@ import { MyTableComponent } from './my-table/my-table.component';
     NgbModule,
     MatCheckboxModule,
     MatTableExporterModule,
+    FormsModule
   ],
   providers: [AuthServiceService, AuthGuard, {
     provide: HTTP_INTERCEPTORS,
